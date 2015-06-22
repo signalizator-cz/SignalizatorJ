@@ -1,8 +1,5 @@
 package org.praguehacks.signalizatorJ.analyzer;
-import org.praguehacks.signalizatorJ.database.Address;
-import org.praguehacks.signalizatorJ.database.AddressManager;
-import org.praguehacks.signalizatorJ.database.Document;
-import org.praguehacks.signalizatorJ.database.DocumentManager;
+
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
@@ -18,6 +15,10 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
+import org.praguehacks.signalizatorJ.database.Address;
+import org.praguehacks.signalizatorJ.database.AddressManager;
+import org.praguehacks.signalizatorJ.database.Document;
+import org.praguehacks.signalizatorJ.database.DocumentManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;

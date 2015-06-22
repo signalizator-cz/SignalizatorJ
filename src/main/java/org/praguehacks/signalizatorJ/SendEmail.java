@@ -1,28 +1,19 @@
 package org.praguehacks.signalizatorJ;
 
-import org.apache.commons.io.Charsets;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.input.CharSequenceInputStream;
-import org.apache.commons.mail.*;
-
-import org.hibernate.cfg.ClassPropertyHolder;
-import org.omg.IOP.Encoding;
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
 import org.praguehacks.signalizatorJ.database.EmailTemplate;
 import org.praguehacks.signalizatorJ.database.EmailTemplateManager;
 import org.praguehacks.signalizatorJ.database.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
-import java.util.*;
-import java.io.*;
-import java.net.InetAddress;
-import java.util.Properties;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -144,12 +135,5 @@ public class SendEmail {
     public static String getTypeWeekly() {
         return TYPE_WEEKLY;
     }
-
-    public void setTypeWelcome() {
-        emailType = TYPE_WELCOME;
-    }
     
-    public void setTypeWeekly() {
-        emailType = TYPE_WEEKLY;
-    }
 }

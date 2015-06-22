@@ -1,7 +1,6 @@
 package org.praguehacks.signalizatorJ.database;
 
 import javax.persistence.*;
-import java.util.Arrays;
 
 /**
  * Created by kucerajn on 14.6.2015.
