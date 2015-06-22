@@ -5,11 +5,15 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.CharSequenceInputStream;
 import org.apache.commons.mail.*;
 
+import org.hibernate.cfg.ClassPropertyHolder;
 import org.omg.IOP.Encoding;
 import org.praguehacks.signalizatorJ.database.EmailTemplate;
 import org.praguehacks.signalizatorJ.database.EmailTemplateManager;
 import org.praguehacks.signalizatorJ.database.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +33,9 @@ public class SendEmail {
     @Autowired
     EmailTemplateManager emailTemplateManager;
 
+    @Autowired
+    WebAppConfig webAppConfig;
+    
     private User user;
     private String from;
     private String textBody;
@@ -53,11 +60,12 @@ public class SendEmail {
         
         HtmlEmail email = new HtmlEmail();
         email.setCharset("UTF-8");
-        email.setSmtpPort(587);
-        email.setHostName("smtp.gmail.com");
-        email.setAuthenticator(new DefaultAuthenticator("damesignal@gmail.com", "hoij9nur"));
+        email.setSmtpPort(webAppConfig.getEmailFromPort());
+        email.setHostName(webAppConfig.getEmailFromSmtpServer());
+        email.setAuthenticator(new DefaultAuthenticator(webAppConfig.getEmailFromUsername(),
+                webAppConfig.getEmailFromPassword()));
         email.setStartTLSEnabled(true);
-        email.setFrom("damesignal@gmail.com");
+        email.setFrom(webAppConfig.getEmailFromUsername());
         email.addTo(user.getEmail());
 
         List<EmailTemplate> templates = null;
