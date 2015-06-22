@@ -135,5 +135,12 @@ public class SendEmail {
     public static String getTypeWeekly() {
         return TYPE_WEEKLY;
     }
+
+    public void setTypeWelcome() {
+        emailType = TYPE_WELCOME;
+    }
     
+    public void setTypeWeekly() {
+        emailType = TYPE_WEEKLY;
+    }
 }
