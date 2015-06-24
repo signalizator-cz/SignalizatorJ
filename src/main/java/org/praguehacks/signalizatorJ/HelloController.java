@@ -85,23 +85,29 @@ public class HelloController {
     }
 
 
-    // {"email":"email@email.com", "lowerLeftX":"150", "lowerLeftY":"50", "upperRightX":"150", "upperRightY":"50"}
+    // {"params:{"email":"email@email.com", "lowerLeftX":150, "lowerLeftY":14, "upperRightX":150, "upperRightY":14}}
     @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
     public @ResponseBody void saveUser(@RequestBody String usrJson) throws IOException, EmailException {
         System.out.println("\nINFO: saveUser.RequestBody: " + usrJson);
         
         User user = new User();
 
-        HashMap<String, HashMap<String, Object>> result = new ObjectMapper().readValue(usrJson, HashMap.class);
+        HashMap result = new ObjectMapper().readValue(usrJson, HashMap.class);
 
-        HashMap<String, Object> params;
+        HashMap params;
         if (result.containsKey("params")) {
-             params = result.get("params");
+             params = (HashMap) result.get("params");
         } else { // assume email and others are stored directly in the json
             params = new ObjectMapper().readValue(usrJson, HashMap.class);
         }
         
-        user.setEmail((String) params.get("email"));
+        String email = (String) params.get("email");
+        if (email != null && !email.isEmpty()) {
+            user.setEmail(email);
+        } else {
+            System.out.println("\nINFO: No email was provided, continue without changes");
+            return;
+        }
 
         List<User> usersInDB = userManager.findAllByEmail(user.getEmail());
         if (usersInDB != null && usersInDB.size() > 0) {
