@@ -50,7 +50,7 @@ public class HelloController {
         List<Document> docs = new ArrayList<>();//documentManager.getAll();
         docs.add(new Document());
         List<Address> adds = new ArrayList<>();
-        ;//addressManager.getAll();
+        //addressManager.getAll();
         adds.add(new Address());
         List<User> users = userManager.getAll();
         List<EmailTemplate> templates = emailTemplateManager.getAll();
@@ -80,16 +80,14 @@ public class HelloController {
 
     @RequestMapping("/testRectangle")
     public String testRectangle(){
-        List<Document> documents = documentManager.findDocumentsInRectangle(14.5,50.07,14.6,50.08);
+        List<Document> documents = documentManager.findDocumentsInRectangle(14.58,50.075,14.6,50.08);
         return String.valueOf(documents);
     }
 
 
     // {"email":"email@email.com", "lowerLeftX":"150", "lowerLeftY":"50", "upperRightX":"150", "upperRightY":"50"}
     @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    String saveUser(@RequestBody String usrJson) throws IOException, EmailException {
+    public @ResponseBody void saveUser(@RequestBody String usrJson) throws IOException, EmailException {
         User user = new User();
 
         HashMap<String, String> result = new ObjectMapper().readValue(usrJson, HashMap.class);
@@ -124,6 +122,6 @@ public class HelloController {
 //        HttpServletResponse resp = new Response();
 //        resp.setHeader("Access-Control-Allow-Origin: *", "");
 //        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-        return sendEmailResult;
+        return;
     }
 }
