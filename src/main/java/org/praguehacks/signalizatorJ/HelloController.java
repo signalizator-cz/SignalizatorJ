@@ -88,21 +88,30 @@ public class HelloController {
     // {"email":"email@email.com", "lowerLeftX":"150", "lowerLeftY":"50", "upperRightX":"150", "upperRightY":"50"}
     @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
     public @ResponseBody void saveUser(@RequestBody String usrJson) throws IOException, EmailException {
+        System.out.println("\nINFO: saveUser.RequestBody: " + usrJson);
+        
         User user = new User();
 
-        HashMap<String, String> result = new ObjectMapper().readValue(usrJson, HashMap.class);
+        HashMap<String, HashMap<String, Object>> result = new ObjectMapper().readValue(usrJson, HashMap.class);
 
-        user.setEmail(result.get("email"));
+        HashMap<String, Object> params;
+        if (result.containsKey("params")) {
+             params = result.get("params");
+        } else { // assume email and others are stored directly in the json
+            params = new ObjectMapper().readValue(usrJson, HashMap.class);
+        }
+        
+        user.setEmail((String) params.get("email"));
 
         List<User> usersInDB = userManager.findAllByEmail(user.getEmail());
         if (usersInDB != null && usersInDB.size() > 0) {
             user = usersInDB.get(0);
         }
 
-        user.setLowerLeftX(Double.parseDouble(result.get("lowerLeftX")));
-        user.setLowerLeftY(Double.parseDouble(result.get("lowerLeftY")));
-        user.setUpperRightX(Double.parseDouble(result.get("upperRightX")));
-        user.setUpperRightY(Double.parseDouble(result.get("upperRightY")));
+        user.setLowerLeftX((Double) params.get("lowerLeftX"));
+        user.setLowerLeftY((Double) params.get("lowerLeftY"));
+        user.setUpperRightX((Double) params.get("upperRightX"));
+        user.setUpperRightY((Double) params.get("upperRightY"));
         user.setAuthenticated((byte) 1);
         
         Instant instant = Instant.now();
@@ -118,7 +127,7 @@ public class HelloController {
         String sendEmailResult = sendEmail.send();
 
         List<User> users = userManager.getAll();
-        System.out.println("\n\nINFO: saveUser: " + user);
+        System.out.println("\nINFO: saveUser.user: " + user);
 //        HttpServletResponse resp = new Response();
 //        resp.setHeader("Access-Control-Allow-Origin: *", "");
 //        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
