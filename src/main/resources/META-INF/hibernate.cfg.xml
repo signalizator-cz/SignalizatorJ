@@ -17,12 +17,6 @@
         <property name="connection.pool_size">1</property>
         <property name="connection.release_mode">after_transaction</property>
         <property name="current_session_context_class">thread</property>
-        <property name="hibernate.c3p0.acquire_increment">5</property>
-        <property name="hibernate.c3p0.idle_test_period">1800</property>
-        <property name="hibernate.c3p0.max_size">600</property>
-        <property name="hibernate.c3p0.max_statements">50</property>
-        <property name="hibernate.c3p0.min_size">5</property>
-        <property name="hibernate.c3p0.timeout">1800</property>
         
         <mapping class="org.praguehacks.signalizatorJ.database.Document" />
         <mapping class="org.praguehacks.signalizatorJ.database.Address" />
